@@ -1,0 +1,20 @@
+{
+  "name": "pregatit-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/neono23/PregatIT-typescript#readme",
+  "bugs": {
+    "url": "https://github.com/neono23/PregatIT-typescript/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neono23/PregatIT-typescript.git"
+  },
+  "license": "ISC",
+  "author": "Hongu Stefan <stefan.hongu@student.unitbv.ro>",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
