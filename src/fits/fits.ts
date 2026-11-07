@@ -68,5 +68,7 @@ export function seat(cats: readonly Cat[], boxes: readonly Box[]): Seating[] {
 
 /** "shoebox (30×20)" or "unlabelled box (30×20)". The × is U+00D7. */
 export function describe(box: Box): string {
+  if(box.label != undefined) return box.label +  ` (${box.width}×${box.depth})`;
+  else return `unlabelled box (${box.width}×${box.depth})`;
   throw new Error("describe: not written yet");
 }
