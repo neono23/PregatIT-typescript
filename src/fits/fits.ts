@@ -52,7 +52,18 @@ export function bestBox(cat: Cat, boxes: readonly Box[]): Box | null {
  * `boxes` must come out exactly as it went in.
  */
 export function seat(cats: readonly Cat[], boxes: readonly Box[]): Seating[] {
-  throw new Error("seat: not written yet");
+  const boxCopy = boxes.slice();
+  const result: Seating[] = [];
+  for(const cat of cats){
+    const box = bestBox(cat, boxCopy);
+    result.push({ cat, box });
+    if(box !== null){
+      const index = boxCopy.indexOf(box);
+      boxCopy.splice(index, 1);
+    }
+  }
+  return result;
+  //throw new Error("seat: not written yet");
 }
 
 /** "shoebox (30×20)" or "unlabelled box (30×20)". The × is U+00D7. */
