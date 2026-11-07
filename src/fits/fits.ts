@@ -26,15 +26,25 @@ export type Seating = {
  * and the box's shorter side at least half the cat's width.
  */
 export function fits(cat: Cat, box: Box): boolean {
-  if(cat.width/2 > box.width) return false;
+  if(cat.width/2 > Math.min(box.width, box.depth)) return false;
   else if ((cat.length*cat.width)*0.7 > box.depth*box.width)return false;
   return true;
-  throw new Error("fits: not written yet");
+  //throw new Error("fits: not written yet");
 }
 
 /** The smallest box (by area) the cat fits in; the first one on a tie; null if none. */
 export function bestBox(cat: Cat, boxes: readonly Box[]): Box | null {
-  throw new Error("bestBox: not written yet");
+  let min = Infinity;
+  let best: Box | null = null;
+  for(const box of boxes){
+    const area = box.width * box.depth;
+    if(fits(cat,box) && area<min){
+      min = area;
+      best = box;
+    }
+  }
+  return best;
+  //throw new Error("bestBox: not written yet");
 }
 
 /**
