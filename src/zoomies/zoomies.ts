@@ -60,7 +60,7 @@ export function farthest(start: Position, dirs: Dir[]) {
   throw new Error("TODO farthest");
 }
 
-export function where(pos: Position, name: String | null) {
+export function where(pos: Position, name?: String | null) {
   let [x,y] = pos
   if(name) return `${name} is at (${x}, ${y})`
   return `the cat is at (${x}, ${y})`
