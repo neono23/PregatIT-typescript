@@ -38,14 +38,31 @@ export function run(start: Position, dirs : Dir[]) : Position[]{
   throw new Error("TODO run");
 }
 
-export function distance(a, b) {
+export function distance(a: Position, b: Position) {
+  let [x1,y1] = a
+  let [x2,y2] = b
+  return Math.abs(x1-x2) + Math.abs(y1-y2)
   throw new Error("TODO distance");
 }
 
-export function farthest(start, dirs) {
+export function farthest(start: Position, dirs: Dir[]) {
+  let positions = run(start, dirs)
+  let best = start
+  let bestDistance = 0
+  for(const pos of positions){
+    let d = distance(start, pos)
+    if(d > bestDistance){
+      best = pos
+      bestDistance = d
+    }
+  }
+  return best
   throw new Error("TODO farthest");
 }
 
-export function where(pos, name) {
+export function where(pos: Position, name: String | null) {
+  let [x,y] = pos
+  if(name) return `${name} is at (${x}, ${y})`
+  return `the cat is at (${x}, ${y})`
   throw new Error("TODO where");
 }
