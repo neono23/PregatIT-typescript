@@ -8,6 +8,7 @@ export const ROOM = 10; // 10x10, coordinates 0..9
 // TODO: type the parameters and the return values. tsc complains until you do.
 
 export function move(pos: Position, dir: Dir, steps = 1) :Position {
+  //if(!includes N,S,E,W) face throw
   let [x,y] = pos
   switch(dir){
     case "N" :
@@ -23,7 +24,7 @@ export function move(pos: Position, dir: Dir, steps = 1) :Position {
       if(x-steps < 0) return [0,y]
       return [x-steps,y]
   }
-  throw new Error("TODO move");
+  //throw new Error("TODO move");
 }
 
 export function run(start: Position, dirs : Dir[]) : Position[]{
@@ -35,14 +36,14 @@ export function run(start: Position, dirs : Dir[]) : Position[]{
     positions.push(copy)
   }
   return positions
-  throw new Error("TODO run");
+  //throw new Error("TODO run");
 }
 
 export function distance(a: Position, b: Position) {
   let [x1,y1] = a
   let [x2,y2] = b
   return Math.abs(x1-x2) + Math.abs(y1-y2)
-  throw new Error("TODO distance");
+  //throw new Error("TODO distance");
 }
 
 export function farthest(start: Position, dirs: Dir[]) {
@@ -57,12 +58,12 @@ export function farthest(start: Position, dirs: Dir[]) {
     }
   }
   return best
-  throw new Error("TODO farthest");
+  //throw new Error("TODO farthest");
 }
 
 export function where(pos: Position, name?: String | null) {
   let [x,y] = pos
   if(name) return `${name} is at (${x}, ${y})`
   return `the cat is at (${x}, ${y})`
-  throw new Error("TODO where");
+  //throw new Error("TODO where");
 }
