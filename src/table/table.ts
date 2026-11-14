@@ -8,55 +8,55 @@ export type Item = {
 
 export type Table = {
   readonly name: string;
-  readonly items: Item[];
+  readonly items: readonly Item[];
 };
 
 export function knockOff(table: Table, name: string): Table {
-  let items = [... table.items]
-  for(let i = 0 ; i < items.length ; i++){
-    if(items[i]?.name === name){
-      items.splice(i,1)
+  const items = [...table.items];
+  for (let i = 0; i < items.length; i++) {
+    if (items[i]?.name === name) {
+      items.splice(i, 1);
+      break;
     }
   }
-  return {name, items}
+  return { name: table.name, items };
 }
 
 export function knockAllOff(table: Table): Table[] {
-  let snapshots: Table[] = []
-  let current = table
-  while(current.items.length > 0){
-    current = { name: current.name, items: current.items.slice(0, -1) }
-    snapshots.push(current)
+  const snapshots: Table[] = [];
+  let current = table;
+  while (current.items.length > 0) {
+    current = { name: current.name, items: current.items.slice(0, -1) };
+    snapshots.push(current);
   }
-  return snapshots
+  return snapshots;
 }
-  
 
 export function rename(table: Table, from: string, to: string): Table {
-  let items = [... table.items]
-  for(let i = 0; i < items.length; i++){
-    let item = items[i]
-    if(item?.name === from){
-      items[i] = {... item, name:to}
+  const items = [...table.items];
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    if (item?.name === from) {
+      items[i] = { ...item, name: to };
     }
   }
-  return {name: table.name, items}
+  return { name: table.name, items };
 }
 
 export function broken(before: Table, after: Table): string[] {
-  let names: string[] = []
-  for(const item of before.items){
-    let stillThere = after.items.some(other => other.name === item.name)
-    if(item.fragile && !stillThere){
-      names.push(item.name)
+  const names: string[] = [];
+  for (const item of before.items) {
+    const stillThere = after.items.some((other) => other.name === item.name);
+    if (item.fragile && !stillThere) {
+      names.push(item.name);
     }
   }
-  return names
+  return names;
 }
 
 export function whose(item: Item): string {
-  if(item.owner){
-    return `${item.owner}'s ${item.name}`
+  if (item.owner) {
+    return `${item.owner}'s ${item.name}`;
   }
-  return `nobody's ${item.name}`
+  return `nobody's ${item.name}`;
 }
