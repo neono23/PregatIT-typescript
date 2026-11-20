@@ -4,6 +4,7 @@ import {score} from "./bowling.ts";
 
 test( "Gutter game: 20 rolls of 0 scores", ()=>{
     const rolls = new Array<number>(20).fill(0);
+    //se poate face si o clasa in loc de array
     assert.equal(score(rolls),0);
 });
 
