@@ -18,9 +18,14 @@ test ("one spare: 5, 5, 3 scores 16", () =>{
 });
 
 test ("one strike: 10, 3, 4 scores 24", () =>{
-    const rolls = [10, 3, 4, ...new Array<number>(25).fill(0)];
+    const rolls = [10, 3, 4, ...new Array<number>(16).fill(0)];
     assert.equal(score(rolls),24);
 })
+
+test ("perfect game: 12 strikes score 300", () =>{
+    const rolls = new Array<number>(12).fill(10);
+    assert.equal(score(rolls),300);
+});
 
 // gutter game: 20 rolls of 0 scores 0
 // all ones: 20 rolls of 1 scores 20
