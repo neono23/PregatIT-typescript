@@ -37,7 +37,7 @@ function picture(cat: Cat): string {
 
 function card(cat: Cat): string {
   return `
-    <div class="cat-wrapper cat-${cat.id % colors.length}">
+    <div class="cat-wrapper c${cat.id % colors.length}">
       <div class="cat-card">
         <div class="cat-card-inner" style="border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px;">
           <div class="cat-card-header">
