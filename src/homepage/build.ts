@@ -33,13 +33,30 @@ colors.forEach((c, i) => {
   writeFileSync(`${out}/img/c${i}.svg`, picture(c));
 });
 
-const html = `<!doctype html>
+const perPage = 20;
+const pages: Cat[][] = [];
+for (let i = 0; i < cats.length; i += perPage) {
+  pages.push(cats.slice(i, i + perPage));
+}
+
+// page 0 is the homepage, the rest are page-2.html, page-3.html, ...
+function fileName(n: number): string {
+  return n === 0 ? "index.html" : `page-${n + 1}.html`;
+}
+
+function nav(): string {
+  return `<nav>${pages.map((_, n) => `<a href="${fileName(n)}">${n + 1}</a>`).join(" ")}</nav>`;
+}
+
+function pageHtml(pageCats: Cat[], n: number): string {
+  return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>The cats</title>
+  <title>The cats - page ${n + 1}</title>
   <style>
     body { font-family: sans-serif; margin: 24px; }
+    nav a { margin-right: 8px; }
     ul { list-style: none; padding: 0; margin: 0; }
     li { border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; height: 150px; float: left; }
     li p:last-child { font-weight: bold; }
@@ -49,11 +66,16 @@ ${colors.map((c, i) => `    .c${i} { border-color: ${c}; }
 </head>
 <body>
   <h1>The cats</h1>
-  <ul>${cats.map(card).join("")}
+  ${nav()}
+  <ul>${pageCats.map(card).join("")}
   </ul>
 </body>
 </html>
 `;
+}
 
-writeFileSync(`${out}/index.html`, html);
-console.log(`${cats.length} cats in ${out}/`);
+pages.forEach((pageCats, n) => {
+  writeFileSync(`${out}/${fileName(n)}`, pageHtml(pageCats, n));
+});
+console.log(`${cats.length} cats on ${pages.length} pages in ${out}/`);
+
