@@ -27,17 +27,17 @@ function picture(cat: Cat): string {
 }
 
 // and its own stylesheet
-function style(cat: Cat): string {
-  return `/* styles for ${cat.name} */
-.cat-${cat.id} .cat-card-header-title-text { color: ${color(cat)}; }
-.cat-${cat.id} .cat-card-inner { border-color: ${color(cat)}; }
-.cat-${cat.id} .cat-card-body-naps-value { font-weight: bold; }
-`;
-}
+// function style(cat: Cat): string {
+//   return `/* styles for ${cat.name} */
+// .cat-${cat.id} .cat-card-header-title-text { color: ${color(cat)}; }
+// .cat-${cat.id} .cat-card-inner { border-color: ${color(cat)}; }
+// .cat-${cat.id} .cat-card-body-naps-value { font-weight: bold; }
+// `;
+// }
 
 function card(cat: Cat): string {
   return `
-    <div class="cat-wrapper cat-${cat.id}">
+    <div class="cat-wrapper cat-${cat.id % colors.length}">
       <div class="cat-card">
         <div class="cat-card-inner" style="border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px;">
           <div class="cat-card-header">
@@ -59,11 +59,9 @@ function card(cat: Cat): string {
 
 rmSync(out, { recursive: true, force: true });
 mkdirSync(`${out}/img`, { recursive: true });
-mkdirSync(`${out}/css`, { recursive: true });
 
 for (const cat of cats) {
   writeFileSync(`${out}/img/cat-${cat.id}.svg`, picture(cat));
-  writeFileSync(`${out}/css/cat-${cat.id}.css`, style(cat));
 }
 
 const html = `<!doctype html>
@@ -72,7 +70,11 @@ const html = `<!doctype html>
   <meta charset="utf-8">
   <title>The cats</title>
   <style>body { font-family: sans-serif; margin: 24px; }</style>
-${cats.map((cat) => `  <link rel="stylesheet" href="css/cat-${cat.id}.css">`).join("\n")}
+  <style>
+${colors.map((c, i) => `    .c${i} .cat-card-header-title-text { color: ${c}; }
+    .c${i} .cat-card-inner { border-color: ${c}; }`).join("\n")}
+    .cat-card-body-naps-value { font-weight: bold; }
+  </style>
 </head>
 <body>
   <div class="page">
