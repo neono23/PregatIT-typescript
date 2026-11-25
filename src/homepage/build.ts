@@ -7,10 +7,6 @@ import { cats, type Cat } from "./cats.ts";
 const out = "dist";
 const colors = ["#f4a261", "#2a9d8f", "#e76f51", "#457b9d", "#e9c46a", "#8d99ae"];
 
-function color(cat: Cat): string {
-  return colors[cat.id % colors.length] ?? "#000";
-}
-
 // every cat gets its own picture file
 function picture(fill: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
@@ -25,35 +21,9 @@ function picture(fill: string): string {
 `;
 }
 
-// and its own stylesheet
-// function style(cat: Cat): string {
-//   return `/* styles for ${cat.name} */
-// .cat-${cat.id} .cat-card-header-title-text { color: ${color(cat)}; }
-// .cat-${cat.id} .cat-card-inner { border-color: ${color(cat)}; }
-// .cat-${cat.id} .cat-card-body-naps-value { font-weight: bold; }
-// `;
-// }
-
 function card(cat: Cat): string {
   return `
-    <div class="cat-wrapper c${cat.id % colors.length}">
-      <div class="cat-card">
-        <div class="cat-card-inner" style="border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; float: left; height: 150px;">
-          <div class="cat-card-header">
-            <div class="cat-card-header-picture">
-              <<img src="img/c${cat.id % colors.length}.svg" alt="${cat.name}" width="64" height="64">
-            </div>
-            <div class="cat-card-header-title">
-              <h3 class="cat-card-header-title-text"><span>${cat.name}</span></h3>
-            </div>
-          </div>
-          <div class="cat-card-body">
-            <div class="cat-card-body-quirk"><p><span>${cat.quirk}</span></p></div>
-            <div class="cat-card-body-naps"><p><span>naps: </span><span class="cat-card-body-naps-value">${cat.naps}</span><span> hours a day</span></p></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+<li class="c${cat.id % colors.length}"><img src="img/c${cat.id % colors.length}.svg" alt="${cat.name}" width="64" height="64"><h3>${cat.name}</h3><p>${cat.quirk}</p><p>naps: ${cat.naps} hours a day</p></li>`;
 }
 
 rmSync(out, { recursive: true, force: true });
@@ -68,19 +38,19 @@ const html = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <title>The cats</title>
-  <style>body { font-family: sans-serif; margin: 24px; }</style>
   <style>
-${colors.map((c, i) => `    .c${i} .cat-card-header-title-text { color: ${c}; }
-    .c${i} .cat-card-inner { border-color: ${c}; }`).join("\n")}
-    .cat-card-body-naps-value { font-weight: bold; }
+    body { font-family: sans-serif; margin: 24px; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { border: 2px solid; border-radius: 8px; padding: 8px; margin: 8px; width: 260px; height: 150px; float: left; }
+    li p:last-child { font-weight: bold; }
+${colors.map((c, i) => `    .c${i} { border-color: ${c}; }
+    .c${i} h3 { color: ${c}; }`).join("\n")}
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="page-header"><h1>The cats</h1></div>
-    <div class="page-content">${cats.map(card).join("")}
-    </div>
-  </div>
+  <h1>The cats</h1>
+  <ul>${cats.map(card).join("")}
+  </ul>
 </body>
 </html>
 `;
