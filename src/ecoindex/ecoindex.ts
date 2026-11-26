@@ -17,8 +17,8 @@ export type Grade =  "A" | "B" | "C" | "D" | "E" | "F" | "G";
 
 export function quantile(table: number[], value: number): number {
   for(let i = 1; i < table.length; i++){
-    let border = table[i] ?? 0
-    let previous = table[i - 1] ?? 0
+    const border = table[i] ?? 0
+    const previous = table[i - 1] ?? 0
     if(value < border){
       return (i - 1) + (value - previous) / (border - previous)
     }
@@ -27,9 +27,9 @@ export function quantile(table: number[], value: number): number {
 }
 
 export function ecoIndex(page: Page): number {
-  let qDom = quantile(DOM, page.dom)
-  let qRequests = quantile(REQUESTS, page.requests)
-  let qSize = quantile(SIZE_KB, page.sizeKb)
+  const qDom = quantile(DOM, page.dom)
+  const qRequests = quantile(REQUESTS, page.requests)
+  const qSize = quantile(SIZE_KB, page.sizeKb)
   return 100 - 5 * (3 * qDom + 2 * qRequests + qSize) / 6
 }
 
