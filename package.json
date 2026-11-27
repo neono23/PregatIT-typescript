@@ -17,7 +17,7 @@
   "scripts": {
     "test": "node --test",
     "check": "tsc --noEmit",
-    "ci": "npm run check && npm test",
+    "ci": "npm run check && npm test && npm run lint",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
