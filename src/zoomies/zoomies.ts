@@ -1,15 +1,12 @@
 // 02 - zoomies
 
-export type Position = [number, number]; // [x, y]
+export type Position = [number, number];
 export type Dir = "N" | "E" | "S" | "W";
 
-export const ROOM = 10; // 10x10, coordinates 0..9
-
-// TODO: type the parameters and the return values. tsc complains until you do.
+export const ROOM = 10; 
 
 export function move(pos: Position, dir: Dir, steps = 1) :Position {
-  //if(!includes N,S,E,W) face throw
-  let [x,y] = pos
+  const [x,y] = pos
   switch(dir){
     case "N" :
       if(y+steps > ROOM - 1) return [x, ROOM-1]
@@ -24,46 +21,40 @@ export function move(pos: Position, dir: Dir, steps = 1) :Position {
       if(x-steps < 0) return [0,y]
       return [x-steps,y]
   }
-  //throw new Error("TODO move");
 }
 
 export function run(start: Position, dirs : Dir[]) : Position[]{
- //let dirsCopy = dirs; 
-  let positions = [start]
+  const positions = [start]
   let copy = start ;
   for(const dir of dirs){
     copy = move(copy, dir)
     positions.push(copy)
   }
   return positions
-  //throw new Error("TODO run");
 }
 
 export function distance(a: Position, b: Position) {
-  let [x1,y1] = a
-  let [x2,y2] = b
+  const [x1,y1] = a
+  const [x2,y2] = b
   return Math.abs(x1-x2) + Math.abs(y1-y2)
-  //throw new Error("TODO distance");
 }
 
 export function farthest(start: Position, dirs: Dir[]) {
-  let positions = run(start, dirs)
+  const positions = run(start, dirs)
   let best = start
   let bestDistance = 0
   for(const pos of positions){
-    let d = distance(start, pos)
+    const d = distance(start, pos)
     if(d > bestDistance){
       best = pos
       bestDistance = d
     }
   }
   return best
-  //throw new Error("TODO farthest");
 }
 
-export function where(pos: Position, name?: String | null) {
-  let [x,y] = pos
+export function where(pos: Position, name?: string | null) {
+  const [x,y] = pos
   if(name) return `${name} is at (${x}, ${y})`
   return `the cat is at (${x}, ${y})`
-  //throw new Error("TODO where");
 }
